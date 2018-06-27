@@ -22,8 +22,6 @@ command = args.command + unknown
 class WebServer:
 
     def __init__(self, port):
-        print os.getcwd()
-        os.chdir("page")
         SocketServer.TCPServer.allow_reuse_address = True
         self.port = port
         self.handler = SimpleHTTPServer.SimpleHTTPRequestHandler
