@@ -67,7 +67,7 @@ class TcpSocket:
 
 
 # Run process
-srt_proc = sp.Popen(command, stdout=sp.PIPE, stderr=sp.PIPE)
+srt_proc = sp.Popen(command)
 
 proc_returncode = srt_proc.poll()
 
