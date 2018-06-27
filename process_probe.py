@@ -30,10 +30,10 @@ class WebServer:
 
     def start_web_server(self):
         try:
-            print "Opening webserver on port {}".format(args.port)
+            print "Opening webserver probe on port {}".format(args.port)
             self.httpd.serve_forever()
         except Exception as exc:
-            print "Error opening probe webserver: {}".format(exc)
+            print "Error opening webserver probe: {}".format(exc)
             sys.exit(1)
 
 
@@ -52,7 +52,7 @@ class TcpSocket:
     def open_tcp_socket(self):
 
         try:
-            print "Opening tcp listening socket on port {}".format(args.port)
+            print "Opening tcp probe socket on port {}".format(args.port)
             self.serversocket.bind(('', self.port))
             self.serversocket.listen(1)
         except socket.error, exc:
