@@ -14,6 +14,7 @@ import os
 parser = argparse.ArgumentParser(description='Kubernetes readiness/liveness probe')
 parser.add_argument('probe', type=str, help='The probe type', choices=["http", "tcp"])
 parser.add_argument('port', type=int, help='The listening port')
+parser.add_argument('start_up_delay', type=int, help='The process startup delay')
 parser.add_argument('command', type=str, nargs='*', help='The command to run')
 args, unknown = parser.parse_known_args()
 command = args.command + unknown
@@ -65,10 +66,15 @@ class TcpSocket:
         self.serversocket.close()
 
 
-# Run process
-srt_proc = sp.Popen(command)
+def run_process(command, start_up_delay):
 
-proc_returncode = srt_proc.poll()
+    # Run process
+    time.sleep(start_up_delay)
+    process = sp.Popen(command)
+    return process
+
+proc = run_process(command, args.start_up_delay)
+proc_returncode = proc.poll()
 
 # Run probe
 if proc_returncode is None:
@@ -86,7 +92,7 @@ if proc_returncode is None:
 while True:
 
     time.sleep(1)
-    proc_returncode = srt_proc.poll()
+    proc_returncode = proc.poll()
 
     if proc_returncode is not None:
 
